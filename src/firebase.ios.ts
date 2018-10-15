@@ -603,10 +603,11 @@ function toLoginResult(user, additionalUserInfo?: FIRAdditionalUserInfo): User {
       const pid = firUserInfo.valueForKey("providerID");
       // the app may have dropped Facebook support, so check if the native class is still there
       if (pid === 'facebook.com' && typeof (FBSDKAccessToken) !== "undefined") { // FIRFacebookAuthProviderID
-        const fbCurrentAccessToken = FBSDKAccessToken.currentAccessToken();
-        providers.push({id: pid, token: fbCurrentAccessToken ? fbCurrentAccessToken.tokenString : null});
-      } else {
-        providers.push({id: pid});
+          const fbCurrentAccessToken = FBSDKAccessToken.currentAccessToken();
+          providers.push({id: pid, token: fbCurrentAccessToken ? fbCurrentAccessToken.tokenString : null});
+      } else if (pid === 'google.com') {
+          const token = firebase._gIDAuthentication.idToken;
+          providers.push({ id: pid, token: token});
       }
     }
   }
