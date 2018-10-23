@@ -606,7 +606,7 @@ function toLoginResult(user, additionalUserInfo?: FIRAdditionalUserInfo): User {
           const fbCurrentAccessToken = FBSDKAccessToken.currentAccessToken();
           providers.push({id: pid, token: fbCurrentAccessToken ? fbCurrentAccessToken.tokenString : null});
       } else if (pid === 'google.com') {
-          const token = firebase._gIDAuthentication.idToken;
+          const token = firebase && firebase._gIDAuthentication && firebase._gIDAuthentication.idToken;
           providers.push({ id: pid, token: token});
       }
     }
